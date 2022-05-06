@@ -13,14 +13,12 @@ The project structure is as follows:
 
 ## Installation and pre-requisites
 
-If you're using Docker then that's all you need.
+You'll need access to a ROS Melodic environment. You can do this two ways:
 
-Otherwise, if running locally on Ubuntu you'll need:
+1. Using Docker with included Makefile
+2. Installing ROS Melodic yourself on Ubuntu — http://wiki.ros.org/melodic/Installation/Ubuntu
 
-- ROS Melodic
-- Python
-
-Installing dependencies on Ubuntu:
+After you have a ROS environment, install the turtlebot packages:
 
 ```sh
 sudo apt-get update && sudo apt-get install -y ros-melodic-turtlebot3-simulations
