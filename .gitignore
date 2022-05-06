@@ -1,0 +1,10 @@
+.vscode
+build/
+devel/
+.cache
+.config
+.gazebo
+.ignition
+.ros
+.sdformat
+.bash_history
