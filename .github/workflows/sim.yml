@@ -13,6 +13,9 @@ jobs:
   simulation:
     container: public.ecr.aws/docker/library/ros:melodic-robot
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
     steps:
       - uses: actions/checkout@v2
       - name: Install dependencies
