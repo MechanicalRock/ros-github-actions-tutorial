@@ -7,10 +7,12 @@ from geometry_msgs.msg import Twist
 def move():
     """Continuously move the robot by sending velocity commands
     """
-
     rospy.init_node('robot_mover', log_level=rospy.DEBUG)
 
+    # We want to publish velocity message to the /cmd_vel topic
     velocity_publisher = rospy.Publisher('/cmd_vel', Twist, queue_size=1)
+
+    # Create the velocity message
     vel_msg = Twist()
     vel_msg.linear.x = 1.0
 

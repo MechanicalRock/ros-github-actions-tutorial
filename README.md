@@ -1,6 +1,6 @@
-# Running ROS simulation in GitHub Actions
+# Creating a robotics simulation pipeline with GitHub Actions and ROS
 
-Source code for the blog post with the same name.
+This repository contains the source code and content for the [GitHub Actions and ROS tutorial](tutorial.md).
 
 ## Design
 

@@ -1,6 +1,6 @@
 name: Run tests in simulation
 
-# We only want these changes to run when we push to the main branch, or if 
+# We only want these changes to run when we push to the main branch
 on:
   push:
     branches:
@@ -31,7 +31,8 @@ jobs:
           sudo apt-get install -y \
             ros-melodic-turtlebot3 \
             ros-melodic-turtlebot3-simulations \
-            ros-melodic-gazebo*
+            ros-melodic-gazebo-ros-pkgs \
+            ros-melodic-gazebo-ros-control
 
       # Build our workspace
       - name: Build workspace
