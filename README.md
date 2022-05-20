@@ -21,7 +21,7 @@ You'll need access to a ROS Melodic environment. You can do this two ways:
 After you have a ROS environment, install the turtlebot packages:
 
 ```sh
-sudo apt-get update && sudo apt-get install -y ros-melodic-turtlebot3-simulations
+sudo apt-get update && sudo apt-get install -y ros-melodic-turtlebot3 ros-melodic-turtlebot3-simulations ros-melodic-gazebo*
 ```
 
 ## How to run ROS Docker container
@@ -30,6 +30,12 @@ Setup:
 
 ```sh
 make setup
+```
+
+Start:
+
+```sh
+make start
 ```
 
 Attach shell:
@@ -44,7 +50,7 @@ To stop:
 make stop
 ```
 
-## How to run simulation
+## Build the project
 
 Enter the docker shell, or on your local Ubuntu system, then:
 
@@ -52,6 +58,35 @@ Enter the docker shell, or on your local Ubuntu system, then:
 cd ~/catkin_ws
 catkin_make
 source devel/setup.bash
-roslaunch my_turtlebot_sim my_turtlebot_sim.launch
+```
+
+## How to run simulation
+
+First build the project, then run:
+
+```sh
+TURTLEBOT3_MODEL=burger roslaunch my_turtlebot_sim my_turtlebot_sim.launch &
+```
+
+Verify the robot is moving with:
+
+```sh
+rostopic echo -w 5 /gazebo/model_states
+```
+
+Note the change in X position of the burger model.
+
+To kill the process, move it to the forward and then ctrl + c (or cmd + c on Mac):
+
+```sh
+fg
+```
+
+### How to run simulation tests
+
+First build the project, then run:
+
+```sh
+TURTLEBOT3_MODEL=burger rostest my_turtlebot_sim my_turtlebot_sim.test --text
 ```
 

@@ -1,0 +1,5 @@
+<launch>
+  <include file="$(find my_turtlebot_sim)/my_turtlebot_sim.launch" />
+
+  <test test-name="test_bot_moves" pkg="my_turtlebot_sim" type="test_bot_moves.py" time-limit="30.0"/>
+</launch>
