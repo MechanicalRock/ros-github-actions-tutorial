@@ -55,6 +55,7 @@ make stop
 Enter the docker shell, or on your local Ubuntu system, then:
 
 ```sh
+source /opt/ros/melodic/setup.bash
 cd ~/catkin_ws
 catkin_make
 source devel/setup.bash

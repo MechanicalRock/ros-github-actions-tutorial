@@ -1,6 +1,6 @@
 setup:
 	docker rm --force ros-github-actions
-	docker run -t -d --name ros-github-actions --user=root -v ${PWD}:/root/ ros:melodic-robot
+	docker run -t -d --name ros-github-actions --user=root -v ${PWD}:/root/ public.ecr.aws/docker/library/ros:melodic-robot
 
 start:
 	docker start ros-github-actions

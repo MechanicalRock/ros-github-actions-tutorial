@@ -1,0 +1,31 @@
+name: Run tests in simulation
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+env:
+  TURTLEBOT3_MODEL: burger
+
+jobs:
+  simulation:
+    container: public.ecr.aws/docker/library/ros:melodic-robot
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install dependencies
+        run: |
+          sudo apt-get update && \
+          sudo apt-get install -y \
+            ros-melodic-turtlebot3 \
+            ros-melodic-turtlebot3-simulations \
+            ros-melodic-gazebo*
+      - name: Build workspace
+        run: |
+          source /opt/ros/melodic/setup.bash
+          cd catkin_ws
+          catkin_make
+          source devel/setup.bash
+      - name: Run tests
+        run: rostest my_turtlebot_sim my_turtlebot_sim.test --text

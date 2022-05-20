@@ -8,12 +8,16 @@ from gazebo_msgs.msg import ModelStates
 
 class TestBotMoves(unittest.TestCase):
     def test_movement(self):
+        """Test that the robot is continuously movement by tracking how
+        far it has travelled from it's original spawn point (0,0,0)
+        """
         rospy.init_node('test_movement', log_level=rospy.DEBUG)
 
         self.idx = None
-        self.travelled = 0.0
+        self.x = 0.0
+        self.y = 0.0
 
-        # We're expecting the robot to move this many meters from the origin
+        # We're expecting the robot to move this many meters from spawn
         expected_travel = 1.5
 
         # Subscribe to Gazebo model states, so we can check if our robot moved.
@@ -21,14 +25,21 @@ class TestBotMoves(unittest.TestCase):
             '/gazebo/model_states', ModelStates, self.movement_callback)
 
         # Keep iterating until the robot travels as far as we expect
-        while self.travelled < expected_travel and not rospy.is_shutdown():
-            rospy.loginfo('Travelled; %s m', round(self.travelled, 1))
+        travelled = self.get_distance_from_spawn()
+        while travelled < expected_travel and not rospy.is_shutdown():
+            rospy.loginfo('Travelled; %s m', round(travelled, 1))
             rospy.sleep(1)
+            travelled = self.get_distance_from_spawn()
 
         # The robot has traveled as far as we expect. Test complete!
-        assert self.travelled >= expected_travel
+        assert travelled >= expected_travel
 
     def movement_callback(self, data):
+        """Record the robots simulation world position whenever it's
+        updated, so that we can check how far it has travelled from
+        the spawn point.
+        """
+
         # Find the index of the turtlebot model within all Gazebo models.
         if self.idx is None:
             self.idx = 0
@@ -37,12 +48,14 @@ class TestBotMoves(unittest.TestCase):
                     break
                 self.idx += 1
 
-        # Save turtlebots current position
-        x = data.pose[self.idx].position.x
-        y = data.pose[self.idx].position.y
+        # Save current X/Y position in the sim world
+        self.x = data.pose[self.idx].position.x
+        self.y = data.pose[self.idx].position.y
 
-        # Use pythagoras to get total distance travelled from the origin
-        self.travelled = math.sqrt(abs(x) ** 2 + abs(y) ** 2)
+    def get_distance_from_spawn(self):
+        """Use pythagoras to get total distance away from the spawn point
+        """
+        return math.sqrt(abs(self.x) ** 2 + abs(self.y) ** 2)
 
 
 if __name__ == '__main__':
