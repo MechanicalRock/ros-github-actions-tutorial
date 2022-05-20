@@ -20,11 +20,6 @@ jobs:
         working-directory: catkin_ws/
     steps:
       - uses: actions/checkout@v2
-      - name: Cache apt packages
-        uses: actions/cache@v3
-        with:
-          path: |
-            /var/cache/apt/archives/
 
       - name: Install dependencies
         run: |
