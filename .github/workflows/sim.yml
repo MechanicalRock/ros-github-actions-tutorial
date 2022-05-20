@@ -13,11 +13,19 @@ jobs:
   simulation:
     container: public.ecr.aws/docker/library/ros:melodic-robot
     runs-on: ubuntu-latest
+
     defaults:
       run:
         shell: bash
+        working-directory: catkin_ws/
     steps:
       - uses: actions/checkout@v2
+      - name: Cache apt packages
+        uses: actions/cache@v3
+        with:
+          path: |
+            /var/cache/apt/archives/
+
       - name: Install dependencies
         run: |
           sudo apt-get update && \
@@ -25,11 +33,13 @@ jobs:
             ros-melodic-turtlebot3 \
             ros-melodic-turtlebot3-simulations \
             ros-melodic-gazebo*
+
       - name: Build workspace
         run: |
           source /opt/ros/melodic/setup.bash
-          cd catkin_ws
           catkin_make
-          source devel/setup.bash
+
       - name: Run tests
-        run: rostest my_turtlebot_sim my_turtlebot_sim.test --text
+        run: |
+          source devel/setup.bash &&
+          rostest my_turtlebot_sim my_turtlebot_sim.test --text
