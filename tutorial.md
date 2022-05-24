@@ -437,6 +437,6 @@ In the real world, you may want to integrate a simulation pipeline step as part 
 
 If you need help with your pipelines, please feel free to get [in touch with us at Mechanical Rock](https://www.mechanicalrock.io/lets-get-started/).
 
-## About the Author
+## About the author
 
 Simon Bracegirdle is a software developer and cloud architect from Perth, Western Australia. I work as a Senior Consultant at [Mechanical Rock](https://www.mechanicalrock.io/), where I help clients to build cloud native software and improve software practices.
