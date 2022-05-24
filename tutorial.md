@@ -4,7 +4,7 @@
 
 At [Mechanical Rock](https://www.mechanicalrock.io/), we are strong believers in the benefits of continuous integration (CI) and continuous deployment (CD) pipelines. CI in particular is useful for running all kinds of validation and checks on your code before and after merging. For example, you can run; unit tests, static type checkers, linters and code builds.
 
-For robotics teams, one useful validation step is simulation. This allows fast and extensive testing of robot software before pushing it out to your live robots, reducing the risk, and shortening the feedback loop of each deployment you make.
+For robotics teams, one useful validation step is simulation. This allows fast and extensive testing of robot software before pushing it out to your live robots. This reduces the risk and shortens the feedback loop of each deployment you make.
 
 Of all the CI/CD tools available today, [GitHub Actions](https://github.com/features/actions) is emerging as a popular and easy to use option for building your pipeline. But, up to this point, there hasn't been a lot of discussion of how to use it in a robotics context.
 
