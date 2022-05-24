@@ -41,7 +41,7 @@ If you're running Ubuntu or Debian you can install ROS Melodic by following the 
 
 ### Option 2) You can run ROS in Docker
 
-If you don't have a supported system, or you would prefer not to install ROS on your base OS, you can containerise ROS instead.
+If you don't have a supported system, or you would prefer not to install ROS on your base OS, you can containerize ROS instead.
 
 After you have [Docker Desktop installed](https://docs.docker.com/desktop/), follow the steps below to run the ROS melodic container:
 
@@ -107,7 +107,7 @@ def move():
 
     while not rospy.is_shutdown():
         # Publish the velocity message each tick
-        # , so that our robot is continuously moving
+        # so that our robot is continuously moving
         velocity_publisher.publish(vel_msg)
         r.sleep()
 
@@ -156,7 +156,7 @@ Once we add a launch configuration in a later step, the `test_movement` test wil
 
 In our case, since our robot is all about moving, we want to check that the robot has moved a fixed amount from the spawn point. We'll set a timeout so that if that never happens, the test will fail to give us the feedback we need.
 
-To check if it's moving, we'll three methods in the `TestBotMoves` class. For the first method, let's save the position of the robot when it moves:
+To check if it's moving, we'll write three methods in the `TestBotMoves` class. For the first method, let's save the position of the robot when it moves:
 
 ```py
 def movement_callback(self, data):
@@ -290,7 +290,7 @@ If you have any issues with your project, please compare your project to the [re
 
 We can use GitHub Actions by defining workflows in yaml files. A [workflow](https://docs.github.com/en/actions/using-workflows) is a process that [triggers](https://docs.github.com/en/actions/using-workflows/triggering-a-workflow) under certain conditions, which we define in the `on` block. When we trigger these conditions, for example by pushing code to a branch, or opening a pull requests, then it executes commands that we define in the `jobs` block.
 
-The [`jobs` block](https://docs.github.com/en/actions/using-jobs/using-jobs-in-a-workflow) defines the graph of processes that need to run in our workflow. Each job can be optionally dependent on other jobs. For example; you may want to run a `deploy` job after running your `build` and `test` jobs. Or you may want to run that job as the first task in the workflow.
+The [`jobs` block](https://docs.github.com/en/actions/using-jobs/using-jobs-in-a-workflow) defines the graph of processes that need to run in our workflow. Each job can be optionally dependent on other jobs. For example, you may want to run a `deploy` job after running your `build` and `test` jobs. Or you may want to run that job as the first task in the workflow.
 
 In our case, to keep it simple, we will run a single `simulation` job. This job will contain a series of steps which are essentially shell commands. For example; we will first check out the code, then install our package dependencies, then build our project before running the `rostest` for simulation.
 
@@ -333,7 +333,7 @@ jobs:
       # To be defined ...
 ```
 
-We need to check out the code and installing the Turtlebot and Gazebo simulations:
+We need to check out the code and install the Turtlebot and Gazebo simulations:
 
 ```yml
 jobs:
@@ -355,7 +355,7 @@ jobs:
             ros-melodic-gazebo-ros-control
 ```
 
-Then build the workspace and run simulation:
+Then build the workspace and run the simulation:
 
 ```yml
 jobs:
@@ -406,7 +406,7 @@ From this view you can dig into each of the steps of the job. If all went well t
 If you scroll down the logs, you'll see the following key bits of output indicating that our robot travelled the expected distance:
 
 ```sh
- [INFO] [1653028456.262115, 0.000000]: Travelled; 0.0 m
+[INFO] [1653028456.262115, 0.000000]: Travelled; 0.0 m
 [DEBUG] [1653028456.292253, 0.000000]: connecting to 9fff04462213 57261
 [DEBUG] [1653028456.292333, 0.000000]: connecting to 9fff04462213 57261
 [INFO] [1653028457.382274, 2.729000]: Travelled; 0.2 m
