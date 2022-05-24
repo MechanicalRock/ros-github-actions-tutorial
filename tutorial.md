@@ -439,4 +439,4 @@ If you need help with your pipelines, please feel free to get [in touch with us 
 
 ## About the author
 
-Simon Bracegirdle is a software developer and cloud architect from Perth, Western Australia. I work as a Senior Consultant at [Mechanical Rock](https://www.mechanicalrock.io/), where I help clients to build cloud native software and improve software practices.
+Hi! I'm Simon Bracegirdle, a software developer and cloud architect from Perth, Western Australia. I work as a Senior Consultant at [Mechanical Rock](https://www.mechanicalrock.io/), where I help clients to build cloud native software and improve software practices.
