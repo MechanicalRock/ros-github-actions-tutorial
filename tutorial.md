@@ -166,7 +166,7 @@ To check if the robot's moving, we'll write three methods in the `TestBotMoves` 
 
 ```py
 def movement_callback(self, data):
-    """Record the robots simulation world position whenever it's
+    """Record the robot's simulation world position whenever it's
     updated, so that we can check how far it has travelled from
     the spawn point.
     """
@@ -220,7 +220,7 @@ def test_movement(self):
         rospy.sleep(1)
         travelled = self.get_distance_from_spawn()
 
-    # The robot has traveled as far as we expect. Test complete!
+    # The robot has travelled as far as we expect. Test complete!
     assert travelled >= expected_travel
 ```
 
@@ -235,7 +235,7 @@ Create this file at `catkin_ws/src/my_turtlebot_sim/my_turtlebot_sim.test`:
   <!-- Specify the variant of turtlebot we want -->
   <arg name="model" default="burger"/>
 
-  <!-- Launch our robot moving script! -->
+  <!-- Launch our robot moving script -->
   <node pkg="my_turtlebot_sim" name="mover" type="mover.py" required="true" output="screen"/>
 
   <!-- Launch the turtlebot simulation in Gazebo -->
@@ -243,14 +243,18 @@ Create this file at `catkin_ws/src/my_turtlebot_sim/my_turtlebot_sim.test`:
     <arg name="model" value="$(arg model)"/>
   </include>
 
-  <!-- Run our test script that asserts the robot does what we expect! -->
+  <!-- Run our test script that asserts the robot does what we expect -->
   <test test-name="test_bot_moves" pkg="my_turtlebot_sim" type="test_bot_moves.py" time-limit="30.0"/>
 </launch>
 ```
 
-You will also need to add this line to the bottom of your `catkin_ws/src/my_turtlebot_sim/CMakeLists.txt` file:
+You will also need to add these lines to the bottom of your `catkin_ws/src/my_turtlebot_sim/CMakeLists.txt` file:
 
 ```cmake
+catkin_install_python(PROGRAMS mover.py
+  DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+)
+
 if(CATKIN_ENABLE_TESTING)
   find_package(rostest REQUIRED)
   add_rostest(my_turtlebot_sim.test)
@@ -300,7 +304,7 @@ The [`jobs` block](https://docs.github.com/en/actions/using-jobs/using-jobs-in-a
 
 In our case, to keep it simple, we will run a single `simulation` job. This job will contain a series of steps, each of which is a set of shell commands. For example; we will first check out the code, then install our ROS package dependencies, build our project and then run the simulation with `rostest`.
 
-To learn GitHub Actions more comprehensively, I highly recommend the [official documentation](https://docs.github.com/en/actions/learn-github-actions/understanding-github-actions).
+To further your GitHub Actions learning, I highly recommend the [official documentation](https://docs.github.com/en/actions/learn-github-actions/understanding-github-actions).
 
 ### Write our workflow yml file
 
@@ -309,27 +313,27 @@ Let's create an empty file for our GitHub Actions workflow under the project roo
 ```yml
 name: Run tests in simulation
 
-# We only want these changes to run when we push to the main branch
+# Run the tests when we push to the main branch
 on:
   push:
     branches:
       - main
 
-# Let's default to the burger variant of Turtlebot
+# Default to the burger variant of Turtlebot
 env:
   TURTLEBOT3_MODEL: burger
 ```
 
-Let's add our `simulation` job, which needs to run in a ROS container image. We'll also want to run in a bash shell and work within the catkin workspace directory by default:
+Let's add our `simulation` job, which runs in the ROS container image. We'll also want to run in a bash shell and our catkin workspace directory by default:
 
 ```yml
 jobs:
   simulation:
-    # All steps inside this job will run inside the ROS Melodic container
+    # Run steps with the ROS Melodic container
     container: public.ecr.aws/docker/library/ros:melodic-robot
     runs-on: ubuntu-latest
 
-    # Let's ensure we use bash, and work within our catkin worksapce
+    # Use bash and our catkin workspace folder
     defaults:
       run:
         shell: bash
@@ -350,7 +354,7 @@ jobs:
       # Check out the code
       - uses: actions/checkout@v2
 
-      # Install the Turtlebot and Gazebo packages
+      # Install Turtlebot and Gazebo packages
       - name: Install dependencies
         run: |
           sudo apt-get update && \
@@ -384,11 +388,11 @@ jobs:
           rostest my_turtlebot_sim my_turtlebot_sim.test --text
 ```
 
-[You can see the full YML file here.](https://github.com/MechanicalRock/ros-github-actions-tutorial/blob/main/.github/workflows/sim.yml)
+[You can see the full workflow file here.](https://github.com/MechanicalRock/ros-github-actions-tutorial/blob/main/.github/workflows/sim.yml)
 
 ### Run the workflow
 
-We've finished our workflow definition, we're ready to commit and push our code to GitHub to see the action run:
+We've finished our workflow definition, we're ready to commit and push our code to GitHub to see the action run (this step assumes you have setup a repository):
 
 ```sh
 git add catkin_ws
